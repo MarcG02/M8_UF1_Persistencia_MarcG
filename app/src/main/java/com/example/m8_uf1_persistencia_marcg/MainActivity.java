@@ -59,6 +59,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         try  {
+            /*Reading file*/
             FileInputStream fileInS = openFileInput(FileName);
             InputStreamReader fileInR = new InputStreamReader(fileInS);
             BufferedReader buffReader = new BufferedReader(fileInR);
@@ -73,15 +74,21 @@ public class MainActivity extends AppCompatActivity {
             buffReader.close();
             fileInR.close();
 
+            /*Updating textView to show the content of the txt File*/
+            updateView(FileName, text);
+
             button.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View view) {
-
+                    /*Getting the content of the EditText*/
                     String inputData = inputText.getText().toString();
                     try {
+                        /*If the TextView is Empty this condition shows a message error*/
                         if (TextUtils.isEmpty(inputText.getText().toString())){
                             Toast.makeText(MainActivity.this, "Empty field not allowed!", Toast.LENGTH_SHORT).show();
                         }
+
                         else{
+                            /*Reading the txt File*/
                             FileInputStream fileInS = openFileInput(FileName);
                             InputStreamReader fileInR = new InputStreamReader(fileInS);
                             BufferedReader buffReader = new BufferedReader(fileInR);
@@ -96,6 +103,7 @@ public class MainActivity extends AppCompatActivity {
 
                             buffReader.close();
                             fileInR.close();
+                            /*Writing the EditText content into the txt File*/
                             OutputStream os = openFileOutput(FileName, MODE_PRIVATE);
                             text += inputData;
                             os.write(text.getBytes());
@@ -103,6 +111,7 @@ public class MainActivity extends AppCompatActivity {
                             os.flush();
                             os.close();
 
+                            /*Updtaing textView to show the Update in the txt File*/
                             updateView(FileName, text);
                         }
 
@@ -110,7 +119,9 @@ public class MainActivity extends AppCompatActivity {
                         e.printStackTrace();
                     }
 
+                    /*Confirm Message*/
                     Toast.makeText(MainActivity.this, "Text was written correctly", Toast.LENGTH_SHORT).show();
+                    /*Clearing EditText*/
                     inputText.getText().clear();
 
                 }
@@ -120,12 +131,16 @@ public class MainActivity extends AppCompatActivity {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        updateView(FileName, text);
+
     }
+
+    /*Function to update textView*/
     public void updateView(String FileName, String text) {
+        /*Get textView and adding scrolleable movement*/
         TextView view = (TextView) findViewById(R.id.textView2);
         view.setMovementMethod(new ScrollingMovementMethod());
         try {
+            /*Reading file*/
             FileInputStream fileInS = openFileInput(FileName);
             InputStreamReader fileInR = new InputStreamReader(fileInS);
             BufferedReader buffReader = new BufferedReader(fileInR);
@@ -140,6 +155,8 @@ public class MainActivity extends AppCompatActivity {
 
             buffReader.close();
             fileInR.close();
+
+            /*Updating viewText content*/
             view.setText(text);
         } catch (IOException e) {
             e.printStackTrace();
