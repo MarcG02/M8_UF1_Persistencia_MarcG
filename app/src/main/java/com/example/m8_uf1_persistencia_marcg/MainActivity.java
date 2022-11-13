@@ -52,6 +52,7 @@ public class MainActivity extends AppCompatActivity {
 
                 os.write(text.getBytes());
                 os.close();
+                
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -113,14 +114,16 @@ public class MainActivity extends AppCompatActivity {
 
                             /*Updtaing textView to show the Update in the txt File*/
                             updateView(FileName, text);
+                            /*Confirm Message*/
+                            Toast.makeText(MainActivity.this, "Text was written correctly", Toast.LENGTH_SHORT).show();
                         }
+
 
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
 
-                    /*Confirm Message*/
-                    Toast.makeText(MainActivity.this, "Text was written correctly", Toast.LENGTH_SHORT).show();
+
                     /*Clearing EditText*/
                     inputText.getText().clear();
 
